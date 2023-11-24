@@ -5,7 +5,7 @@ module "eks" {
   cluster_name    = "test-cluster"
   cluster_version = "1.27"
 
-  cluster_endpoint_public_access  = true
+  cluster_endpoint_public_access = true
 
   cluster_addons = {
     coredns = {
