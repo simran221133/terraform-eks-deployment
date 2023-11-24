@@ -13,9 +13,12 @@ jobs:
     name: 'Terraform'
     env:
       # AWS secrets
+      TF_CLOUD_ORGANIZATION: "Org-Development"
+      TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
+      TF_WORKSPACE: "terraform-github-actions"
+      CONFIG_DIRECTORY: "./"
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
       AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_KEY }}
-      TF_API_TOKEN: ${{secrets.TF_API_TOKEN}}
 
     runs-on: ubuntu-latest
     environment: production
