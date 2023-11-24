@@ -8,23 +8,17 @@ on:
     branches:
     - main
 
+  env:
+    # AWS secrets
+    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+    AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_KEY }}
+
 jobs:
   terraform:
     name: 'Terraform'
-    env:
-      # AWS secrets
-      TF_CLOUD_ORGANIZATION: "Org-Development"
-      TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
-      TF_WORKSPACE: "terraform-github-actions"
-      CONFIG_DIRECTORY: "./"
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-      AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_KEY }}
-
     runs-on: ubuntu-latest
-    environment: production
 
     steps:
-
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
@@ -38,11 +32,19 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: init
+      env:
+        TF_CLOUD_ORGANIZATION: "Org-Development"
+        TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
+        TF_WORKSPACE: "terraform-github-actions"
       run: |
-        terraform init -upgrade
+        terraform init
 
     - name: Terraform plan
       id: plan
+      env:
+        TF_CLOUD_ORGANIZATION: "Org-Development"
+        TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
+        TF_WORKSPACE: "terraform-github-actions"
       run: |
         terraform plan
 
